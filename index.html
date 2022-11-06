@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>web app</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
+    <link href="//db.onlinewebfonts.com/c/1c45e28f8e86cc89876f003b953cc3e9?family=SF+Pro+Text" rel="stylesheet"
+        type="text/css" />
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="mbl">
+            <div class="top">
+                <img src="./photos/top.png" alt="">
+            </div>
+            <div class="text">
+                <div class="lefttxt">
+                    <p>Today</p>
+                </div>
+                <div class="righttxt">
+                    <p onclick="dlt()">Hide completed</p>
+                </div>
+            </div>
+            <div id="listtoday" class="list">
+                
+                <div id="todayList" class="todaylist">
+                    <div id="box" class="listitem">
+                    </div>
+                </div>
+            </div>
+            <div class="nextlist">
+                <div class="heading">
+                    <p>Tomorrow</p>
+                </div>
+
+                <div id="tomList" class="tomlist">
+                    <!-- <div class="chekbox">
+                        <input type="checkbox">
+                    </div>
+                    <div class="list1">
+                        <p id="taskText2">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+
+                        <span id="taskTime2">12:42 PM</span>
+                    </div> -->
+                </div>
+            </div>
+            <div class="addicon">
+
+
+                <button onclick="openpage()"><img src="/photos/Left Icon.png" alt=""></button>
+
+            </div>
+        </div>
+    </div>
+    <div id="task" class="part2">
+        <nav>
+            <div onclick="closepage()" class="left2">
+                <img src="./photos/chevron.left.png" alt="">
+                <p>Close</p>
+            </div>
+            <div class="right2">
+                <p>Task</p>
+            </div>
+        </nav>
+        <div class="main">
+            <p>Add a task</p>
+        </div>
+        <div class="name">
+            <p>Name</p>
+            <div class="input">
+                <input  type="text" name="" id="nameBox" placeholder="Lorem lipsum dolor">
+            </div>
+        </div>
+        <div class="hour">
+            <p>Hour</p>
+            <div class="time">
+                <input class="timeBox" id="timBox" type="time">
+            </div>
+        </div>
+        <div class="today">
+            <p>Today</p>
+            <label id="toogle" class="switch">
+                <input id="slideBtn" type="checkbox" checked onclick="slider()">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="done">
+            <div class="buttondone" id="final" onclick="addData()">
+                <p>Done</p>
+            </div>
+        </div>
+        <div class="para">
+            <p>If you disable today, the task will be considered as tomorrow</p>
+        </div>
+    </div>
+    </div>
+    <script>
+
+
+
+     
+        // var add = document.getElementById('addbtn');
+        var task = document.getElementById('task');
+     
+        var tasks = [];
+        var id = 0 ;
+        function openpage() {
+
+            // task.style.width = ;
+            task.style.display = 'block';
+
+
+        }
+        function closepage(){
+            task.style.display="none"
+        }
+        var tasks=[];
+        function addData() {
+
+            task.style.display="none";
+            listtoday.style.display="block"
+ 
+            var input = document.getElementById('nameBox');
+            var time = document.getElementById('timBox');
+            var sliderBtn = document. getElementById('slideBtn');
+            var todayCheck= sliderBtn.checked;
+            var todayValue=false;
+            if(todayCheck == true) {
+                todayValue = true;
+            }
+            else {
+            todayValue =false;
+            }
+
+            tasks.push({id: id++, min:time.value, name: input.value, today: todayValue, completed: false});
+            console.log("added:",tasks)
+            this.showListing(tasks);
+     
+}
+       
+function showListing(tasks) {
+
+
+var listElement ='';
+var todayCode='';
+var tomorrowCode='';
+var myCode ='';
+var singletask = null;
+
+
+
+console.log('here', tasks);
+
+    var code = tasks.map((task)=> {
+        
+        if(task.today == false) {
+            // var tomlist = document.getElementById('tomList');
+            // tomlist.innerHTML = '';
+            singletask = task;
+            listElement = 'tomList';
+        }
+        else {
+            // var todaylist = document.getElementById('todayList'); 
+            // todaylist.innerHTML='';
+            singletask = task;
+            listElement = 'todayList';
+        }
+        if(task.completed == true) {
+            myCode = `<div id="${listElement}-${task.id}" class="todaylist">
+                <div id="box" class="listitem">
+                    <input type="checkbox" id="myCheck-${task.id}" onclick="myFunction(${task.id})" checked>
+                    <div class="list1" id="text-${task.id}" style="display:block;text-decoration:line-through;opacity:0.3;">
+                        <p id="taskText">`+ task.name + ` </p>
+                        <span id="taskTime">` + task.min + `</span>
+                    </div>
+                </div>
+            </div>`;
+        }
+        else {
+
+            myCode = `<div id="${listElement}-${task.id}" class="todaylist">
+                    <div id="box" class="listitem">
+                        <input type="checkbox" id="myCheck-${task.id}" onclick="myFunction(${task.id})">
+                        <div class="list1" id="text-${task.id}" style="display:block;">
+                            <p id="taskText">`+ task.name + ` </p>
+                            <span id="taskTime">` + task.min + `</span>
+                        </div>
+                    </div>
+                </div>`;
+        }
+    });
+
+if (singletask != null) {
+    if (singletask.today == true) {
+                todayCode = myCode;
+                var mainDiv = document.getElementById(listElement);
+                alert(listElement);
+                var input = document.getElementById('nameBox');
+                input.value = '';
+                return mainDiv.innerHTML += todayCode;
+            }
+    else {
+        tomorrowCode = myCode;
+        var mainDiv = document.getElementById(listElement);
+        alert(listElement);
+        var input = document.getElementById('nameBox');
+        input.value = '';
+        return mainDiv.innerHTML += tomorrowCode;
+    }
+}
+else {
+    if (tasks.length == 0) {
+        alert('empty')
+        var tomlist = document.getElementById('tomList');
+        tomlist.innerHTML = '';
+        var todaylist = document.getElementById('todayList'); 
+        todaylist.innerHTML='';
+    }
+}
+
+}
+
+function myFunction(id) {
+  var checkBox = document.getElementById("myCheck-"+id);
+  var text = document.getElementById("text-"+id);
+  if (checkBox.checked == true){
+    var selectedtask= tasks.map((task) => {
+        if (task.id == id)
+        {
+            console.log("task===",task);
+            return task.completed = !task.completed;
+        }
+    })
+    console.log(tasks);
+    selectedtask.completed = true;
+    // console.log('selected', tasks)
+
+  text.style.opacity=0.3
+    text.style.display = "block";
+    text.style.textDecoration="line-through"
+  } else {
+     text.style.display = "block";
+      text.style.opacity=1
+         text.style.textDecoration="none"
+  }
+}
+
+// toggle switch
+function slider(){
+  
+}
+
+var show=true;
+//showhide completed
+function dlt(){
+    show = !show;
+    tasks = tasks.filter((task) => {
+  return task.completed == false;
+});
+
+if(show == false) {
+    var tomlist = document.getElementById('tomList');
+    tomlist.innerHTML = '';
+    var todaylist = document.getElementById('todayList'); 
+    todaylist.innerHTML='';
+}
+
+console.log('======',tasks)
+this.showListing(tasks);
+
+
+
+}
+
+</script>
+
+
+</body>
+
+</html>
