@@ -12,12 +12,12 @@
 .mbl, .part2{
 
     width:375px ;
-    height: 610px;
+    height: 630px;
     margin: 0px auto;
    
     /* height: 642.22px; */
     background: #F7F8FA;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     border-radius: 24px;
 }
 .top{
@@ -455,6 +455,7 @@ justify-content: center;
 button{
     outline: none;
     border: none;
+    background: none;
     /* background-color: #FFFFFF ; */
 }
 .para{
