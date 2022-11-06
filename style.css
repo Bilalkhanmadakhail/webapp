@@ -9,6 +9,10 @@
     /* background-color: gray; */
     /* padding-top: 20px; */
 }
+.mbl{
+    margin-top: -20px;
+}
+
 .mbl, .part2{
 
     width:375px ;
@@ -23,13 +27,13 @@
 .top{
     display: flex;
     justify-content: end;
-    margin: 40px 10px 0px 10px;
+    margin: 10px 10px 0px 10px;
     
 }
 .top img{
     width: 42px;
     height: 42px;
-    
+    margin-top: 7px;
 }
 .text{
     display: flex;
